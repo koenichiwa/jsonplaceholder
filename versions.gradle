@@ -10,7 +10,6 @@ ext {
             ],
             store: '4.0.0-alpha01',
             junit: '4.12',
-            //kodein: '6.5.0',
             koin: '2.0.1',
             retrofit: '2.6.2',
             glide: '4.10.0',
