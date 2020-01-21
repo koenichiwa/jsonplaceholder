@@ -1,5 +1,6 @@
-package com.kvw.jsonplaceholder
+package com.kvw.jsonplaceholder.data.retrofit
 
+import com.kvw.jsonplaceholder.business.model.User
 import retrofit2.http.GET
 
 interface UserService {

@@ -1,8 +1,9 @@
-package com.kvw.jsonplaceholder
+package com.kvw.jsonplaceholder.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.kvw.jsonplaceholder.business.model.User
 import com.kvw.jsonplaceholder.databinding.ItemUserUserlistBinding
 
 class UserListAdapter(

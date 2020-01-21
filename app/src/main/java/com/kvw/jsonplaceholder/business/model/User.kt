@@ -1,4 +1,4 @@
-package com.kvw.jsonplaceholder
+package com.kvw.jsonplaceholder.business.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
