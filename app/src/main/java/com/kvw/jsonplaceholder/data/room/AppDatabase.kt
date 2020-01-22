@@ -7,7 +7,7 @@ import com.kvw.jsonplaceholder.business.model.User
 import com.kvw.jsonplaceholder.data.room.entity.AlbumEntity
 import com.kvw.jsonplaceholder.data.room.entity.UserEntity
 
-@Database(entities = [UserEntity::class, AlbumEntity::class], version = 2, exportSchema = true)
+@Database(entities = [UserEntity::class, AlbumEntity::class], version = 4, exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao

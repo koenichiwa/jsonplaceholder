@@ -14,7 +14,7 @@ abstract class AlbumDao{
 
     @Transaction
     open suspend fun getByUser(user: User): List<Album>{
-        return getAlbumEntityByUserId(user.id).map { Album(it.id, it.title, it.thumbnailUrl) }
+        return getAlbumEntityByUserId(user.id).map { Album(it.id, it.title) }
     }
 
     @Query("SELECT * FROM AlbumEntity WHERE userId = :userId")
@@ -22,7 +22,7 @@ abstract class AlbumDao{
 
     @Transaction
     open suspend fun insert(user: User, albums: Collection<Album>){
-        insertAlbumEntities(albums.map { AlbumEntity(it.id, user.id, it.title, it.thumbnailUri) })
+        insertAlbumEntities(albums.map { AlbumEntity(it.id, user.id, it.title) })
     }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

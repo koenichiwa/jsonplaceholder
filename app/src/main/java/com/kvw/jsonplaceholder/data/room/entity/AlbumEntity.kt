@@ -9,6 +9,5 @@ data class AlbumEntity(
     @PrimaryKey
     val id: Int,
     val userId: Int,
-    val title: String,
-    val thumbnailUrl: Uri
+    val title: String
 )
