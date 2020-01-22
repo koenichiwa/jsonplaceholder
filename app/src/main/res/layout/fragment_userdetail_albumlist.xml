@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout_userList_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.userlist.UserListFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.userdetail.albumlist.UserDetailAlbumList">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_userList"
+        android:id="@+id/recyclerView_userDetail_albumList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_album_albumlist"/>
 </FrameLayout>

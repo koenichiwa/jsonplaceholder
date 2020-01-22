@@ -1,4 +1,4 @@
-package com.kvw.jsonplaceholder.ui
+package com.kvw.jsonplaceholder.ui.userlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
