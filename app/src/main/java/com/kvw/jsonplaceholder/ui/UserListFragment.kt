@@ -1,21 +1,22 @@
 package com.kvw.jsonplaceholder.ui
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.kvw.jsonplaceholder.R
+import kotlinx.android.synthetic.main.fragment_userlist.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 
+@ExperimentalCoroutinesApi
 class UserListFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = UserListFragment()
-    }
-
-    private lateinit var viewModel: UserListViewModel
+    private val viewModel: UserListViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,8 +27,14 @@ class UserListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(UserListViewModel::class.java)
-        // TODO: Use the ViewModel
+        setupRecyclerView()
     }
 
+    private fun setupRecyclerView() {
+        viewModel.users.observe(this,
+            Observer {
+                recyclerView_userList.swapAdapter(UserListAdapter(it) {}, true)
+                Timber.d("Swapped Adapter, new list size: ${it.size}")
+            })
+    }
 }
