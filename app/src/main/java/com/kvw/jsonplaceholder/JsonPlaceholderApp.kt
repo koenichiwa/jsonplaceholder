@@ -17,7 +17,8 @@ class JsonPlaceholderApp : Application(){
             modules(
                 listOf(
                     KoinModules.retrofitModule,
-                    KoinModules.repositoryModule
+                    KoinModules.repositoryModule,
+                    KoinModules.viewModelModule
                 )
             )
         }

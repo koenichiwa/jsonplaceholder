@@ -4,6 +4,8 @@ import com.google.gson.GsonBuilder
 import com.kvw.jsonplaceholder.business.repository.UserRepository
 import com.kvw.jsonplaceholder.business.repository.UserRepositoryDefault
 import com.kvw.jsonplaceholder.data.retrofit.UserService
+import com.kvw.jsonplaceholder.ui.UserListViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,6 +25,10 @@ object KoinModules {
         single { provideRetrofit(provideGsonConverterFactory()) }
         factory<UserService> { get<Retrofit>().create(
             UserService::class.java) }
+    }
+
+    val viewModelModule = module {
+        viewModel { UserListViewModel(get()) }
     }
 
     private fun provideGsonConverterFactory(): GsonConverterFactory {
