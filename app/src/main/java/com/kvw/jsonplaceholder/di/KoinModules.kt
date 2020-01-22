@@ -7,7 +7,7 @@ import com.kvw.jsonplaceholder.business.repository.UserRepository
 import com.kvw.jsonplaceholder.business.repository.UserRepositoryDefault
 import com.kvw.jsonplaceholder.data.retrofit.UserService
 import com.kvw.jsonplaceholder.data.room.AppDatabase
-import com.kvw.jsonplaceholder.ui.UserListViewModel
+import com.kvw.jsonplaceholder.ui.userlist.UserListViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel

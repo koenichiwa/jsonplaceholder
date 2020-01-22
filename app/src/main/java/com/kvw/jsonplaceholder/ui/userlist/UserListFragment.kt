@@ -1,4 +1,4 @@
-package com.kvw.jsonplaceholder.ui
+package com.kvw.jsonplaceholder.ui.userlist
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -42,7 +42,10 @@ class UserListFragment : Fragment() {
                         progressBar_main.visibility = View.VISIBLE
                     }
                     is Intel.Success -> {
-                        recyclerView_userList.swapAdapter(UserListAdapter(it.data) {}, true)
+                        recyclerView_userList.swapAdapter(
+                            UserListAdapter(
+                                it.data
+                            ) {}, true)
                         Timber.d("Swapped Adapter, new list size: ${it.data.size}")
                         if(it.source == Intel.Source.Remote)
                             progressBar_main.visibility = View.GONE
