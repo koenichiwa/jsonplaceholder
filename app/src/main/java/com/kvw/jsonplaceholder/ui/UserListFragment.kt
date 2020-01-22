@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.kvw.jsonplaceholder.R
+import com.kvw.jsonplaceholder.util.Intel
 import kotlinx.android.synthetic.main.fragment_userlist.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,8 +34,20 @@ class UserListFragment : Fragment() {
     private fun setupRecyclerView() {
         viewModel.users.observe(this,
             Observer {
-                recyclerView_userList.swapAdapter(UserListAdapter(it) {}, true)
-                Timber.d("Swapped Adapter, new list size: ${it.size}")
+                when(it){
+                    is Intel.Pending -> {
+                        Timber.d("Waiting for users")
+                        /*TODO show loading screen*/
+                    }
+                    is Intel.Success -> {
+                        recyclerView_userList.swapAdapter(UserListAdapter(it.data) {}, true)
+                        Timber.d("Swapped Adapter, new list size: ${it.data.size}")
+                    }
+                    is Intel.Error -> {
+                        Timber.e(it.throwable,"Loading users threw an error")
+                        /* TODO Show error */
+                    }
+                }
             })
     }
 }
