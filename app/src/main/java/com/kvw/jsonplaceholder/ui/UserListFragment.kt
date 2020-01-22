@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.kvw.jsonplaceholder.R
 import com.kvw.jsonplaceholder.util.Intel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_userlist.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -37,17 +39,20 @@ class UserListFragment : Fragment() {
                 when(it){
                     is Intel.Pending -> {
                         Timber.d("Waiting for users")
-                        /*TODO show loading screen*/
+                        progressBar_main.visibility = View.VISIBLE
                     }
                     is Intel.Success -> {
                         recyclerView_userList.swapAdapter(UserListAdapter(it.data) {}, true)
                         Timber.d("Swapped Adapter, new list size: ${it.data.size}")
+                        if(it.source == Intel.Source.Remote)
+                            progressBar_main.visibility = View.GONE
                     }
                     is Intel.Error -> {
-                        Timber.e(it.throwable,"Loading users threw an error")
-                        /* TODO Show error */
+                        Timber.e(it.throwable, it.reason)
+                        Snackbar.make(frameLayout_userList_root, it.reason, Snackbar.LENGTH_LONG)
                     }
                 }
-            })
+            }
+        )
     }
 }

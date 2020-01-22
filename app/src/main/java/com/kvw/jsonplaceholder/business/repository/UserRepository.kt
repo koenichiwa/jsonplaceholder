@@ -21,23 +21,23 @@ class UserRepositoryDefault(private val userService: UserService, private val us
             userDao.getAll().let {
                 if(!it.isNullOrEmpty()){
                     localList = it
-                    emit(Intel.Success(localList))
+                    emit(Intel.Success(Intel.Source.Local, localList))
                 }
             }
 
         } catch (t : Throwable){
-            emit(Intel.Error(t, "Something went wrong while fetching from local"))
+            emit(Intel.Error(Intel.Source.Local, t, "Something went wrong while fetching from local"))
         }
 
         try {
             userService.getAll().let {
                 if (it != localList) {
-                    emit(Intel.Success(it))
+                    emit(Intel.Success(Intel.Source.Remote, it))
                     userDao.insertUsers(*it.toTypedArray())
                 }
             }
         } catch(t : Throwable){
-            emit(Intel.Error(t, "Something went wrong while fetching from remote"))
+            emit(Intel.Error(Intel.Source.Remote, t, "Something went wrong while fetching from remote"))
         }
     }
 }
