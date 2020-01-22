@@ -1,24 +1,27 @@
 package com.kvw.jsonplaceholder.business.repository
 
+import com.kvw.jsonplaceholder.business.model.Album
 import com.kvw.jsonplaceholder.business.model.User
-import com.kvw.jsonplaceholder.data.retrofit.UserService
-import com.kvw.jsonplaceholder.data.room.UserDao
+import com.kvw.jsonplaceholder.data.retrofit.AlbumService
+import com.kvw.jsonplaceholder.data.room.AlbumDao
 import com.kvw.jsonplaceholder.util.Intel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-interface UserRepository {
-    fun getAll() : Flow<Intel<List<User>>>
+interface AlbumRepository {
+    fun getByUser(user: User) : Flow<Intel<List<Album>>>
 }
 
-class UserRepositoryDefault(private val userService: UserService, private val userDao: UserDao) :
-    UserRepository {
-    override fun getAll(): Flow<Intel<List<User>>> = flow {
+class AlbumRepositoryDefault(
+    private val albumService: AlbumService,
+    private val albumDao: AlbumDao
+): AlbumRepository {
+    override fun getByUser(user: User): Flow<Intel<List<Album>>> = flow {
         emit(Intel.Pending())
-        var localList = emptyList<User>()
+        var localList = emptyList<Album>()
 
         try {
-            userDao.getAll().let {
+            albumDao.getByUser(user).let {
                 if(!it.isNullOrEmpty()){
                     localList = it
                     emit(Intel.Success(Intel.Source.Local, localList))
@@ -30,10 +33,10 @@ class UserRepositoryDefault(private val userService: UserService, private val us
         }
 
         try {
-            userService.getAll().let {
+            albumService.getByUserId(user.id).let {
                 if (it != localList) {
                     emit(Intel.Success(Intel.Source.Remote, it))
-                    userDao.insert(it)
+                    albumDao.insert(user, it)
                 }
             }
         } catch(t : Throwable){
