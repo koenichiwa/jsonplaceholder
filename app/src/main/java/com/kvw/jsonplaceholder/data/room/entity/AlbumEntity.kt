@@ -1,6 +1,5 @@
 package com.kvw.jsonplaceholder.data.room.entity
 
-import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
