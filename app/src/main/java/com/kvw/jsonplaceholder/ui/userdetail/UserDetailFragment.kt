@@ -1,6 +1,5 @@
 package com.kvw.jsonplaceholder.ui.userdetail
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,8 +15,6 @@ import org.koin.core.parameter.parametersOf
 
 
 class UserDetailFragment : Fragment() {
-
-
     private val navArgs: UserDetailFragmentArgs by navArgs()
     private val viewModel: UserDetailViewModel by viewModel { parametersOf(navArgs.user) }
     //private val postListFragment = UserDetailPostList.newInstance(viewModel)
@@ -36,6 +33,7 @@ class UserDetailFragment : Fragment() {
     }
 
     private fun setUpBottomNav(){
+        switchFragment(UserDetailAlbumList.newInstance(viewModel))
         bottomNavigation_userdetail.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menuItem_userDetail_posts -> {
