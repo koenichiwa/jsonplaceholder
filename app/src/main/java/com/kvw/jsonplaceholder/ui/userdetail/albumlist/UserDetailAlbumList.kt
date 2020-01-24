@@ -1,15 +1,14 @@
 package com.kvw.jsonplaceholder.ui.userdetail.albumlist
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.kvw.jsonplaceholder.R
 import com.kvw.jsonplaceholder.ui.userdetail.UserDetailViewModel
 import com.kvw.jsonplaceholder.util.observe
 import kotlinx.android.synthetic.main.fragment_userdetail_albumlist.*
-
 
 class UserDetailAlbumList(private val userListViewModel: UserDetailViewModel) : Fragment() {
 
@@ -21,7 +20,8 @@ class UserDetailAlbumList(private val userListViewModel: UserDetailViewModel) : 
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_userdetail_albumlist, container, false)

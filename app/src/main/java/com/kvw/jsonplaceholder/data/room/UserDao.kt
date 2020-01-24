@@ -12,7 +12,7 @@ import com.kvw.jsonplaceholder.data.room.entity.UserEntity
 abstract class UserDao {
 
     @Transaction
-    open suspend fun getAll(): List<User>{
+    open suspend fun getAll(): List<User> {
         return getAllEntities().map { User(it.id, it.name, it.username, it.email) }
     }
 
@@ -20,7 +20,7 @@ abstract class UserDao {
     protected abstract suspend fun getAllEntities(): List<UserEntity>
 
     @Transaction
-    open suspend fun insert(users : Collection<User>){
+    open suspend fun insert(users: Collection<User>) {
         insertUserEntities(users.map { UserEntity(it.id, it.name, it.username, it.name) })
     }
 

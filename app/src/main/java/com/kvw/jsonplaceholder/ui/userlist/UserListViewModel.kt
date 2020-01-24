@@ -15,11 +15,11 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 class UserListViewModel(userRepository: UserRepository) : ViewModel() {
     private val _users = MutableLiveData<Intel<List<User>>>()
-    val users : LiveData<Intel<List<User>>> get() = _users
+    val users: LiveData<Intel<List<User>>> get() = _users
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            userRepository.getAll().collect{ _users.postValue(it) }
+            userRepository.getAll().collect { _users.postValue(it) }
         }
     }
 }

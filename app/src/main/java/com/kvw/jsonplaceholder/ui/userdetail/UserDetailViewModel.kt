@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class UserDetailViewModel(user: User, albumRepository: AlbumRepository) : ViewModel() {
     private val _albums = MutableLiveData<Intel<List<Album>>>()
-    val albums : LiveData<Intel<List<Album>>> get() = _albums
+    val albums: LiveData<Intel<List<Album>>> get() = _albums
 
     init {
         viewModelScope.launch(Dispatchers.IO) {

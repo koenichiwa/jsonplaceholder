@@ -8,6 +8,12 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
+apply plugin: "org.jmailen.kotlinter"
+
+lintKotlinMain {
+    exclude '**/*Generated.kt'
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -52,8 +58,8 @@ dependencies {
 
     // Testing
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     testImplementation "junit:junit:$versions.junit"
     androidTestImplementation "androidx.test.ext:junit:$versions.androidx.junit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$versions.androidx.espresso"

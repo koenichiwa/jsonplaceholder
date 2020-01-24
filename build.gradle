@@ -6,7 +6,9 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+        maven {
+            url = uri("https://plugins.gradle.org/m2/")
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.3'
@@ -14,6 +16,9 @@ buildscript {
 
         // Navigation
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.androidx.nav"
+
+        // Ktlint
+        classpath("org.jmailen.gradle:kotlinter-gradle:2.2.0")
     }
 }
 
