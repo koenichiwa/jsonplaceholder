@@ -8,7 +8,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
-class JsonPlaceholderApp : Application(){
+class JsonPlaceholderApp : Application() {
 
     @ExperimentalCoroutinesApi
     override fun onCreate() {

@@ -7,7 +7,7 @@ import com.kvw.jsonplaceholder.util.Intel
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
-    fun getAll() : Flow<Intel<List<User>>>
+    fun getAll(): Flow<Intel<List<User>>>
 }
 
 class UserRepositoryDefault(private val userService: UserService, private val userDao: UserDao) :

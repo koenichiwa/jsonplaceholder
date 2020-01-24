@@ -10,10 +10,10 @@ import com.kvw.jsonplaceholder.business.model.User
 import com.kvw.jsonplaceholder.data.room.entity.AlbumEntity
 
 @Dao
-abstract class AlbumDao{
+abstract class AlbumDao {
 
     @Transaction
-    open suspend fun getByUser(user: User): List<Album>{
+    open suspend fun getByUser(user: User): List<Album> {
         return getAlbumEntityByUserId(user.id).map { Album(it.id, it.title) }
     }
 
@@ -21,7 +21,7 @@ abstract class AlbumDao{
     protected abstract suspend fun getAlbumEntityByUserId(userId: Int): List<AlbumEntity>
 
     @Transaction
-    open suspend fun insert(user: User, albums: Collection<Album>){
+    open suspend fun insert(user: User, albums: Collection<Album>) {
         insertAlbumEntities(albums.map { AlbumEntity(it.id, user.id, it.title) })
     }
 

@@ -1,10 +1,10 @@
 package com.kvw.jsonplaceholder.ui.userdetail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.kvw.jsonplaceholder.R
 import com.kvw.jsonplaceholder.ui.userdetail.albumlist.UserDetailAlbumList
@@ -13,15 +13,15 @@ import kotlinx.android.synthetic.main.fragment_userdetail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-
 class UserDetailFragment : Fragment() {
     private val navArgs: UserDetailFragmentArgs by navArgs()
     private val viewModel: UserDetailViewModel by viewModel { parametersOf(navArgs.user) }
-    //private val postListFragment = UserDetailPostList.newInstance(viewModel)
-    //private val albumListFragment = UserDetailAlbumList.newInstance(viewModel)
+    // private val postListFragment = UserDetailPostList.newInstance(viewModel)
+    // private val albumListFragment = UserDetailAlbumList.newInstance(viewModel)
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_userdetail, container, false)
@@ -32,7 +32,7 @@ class UserDetailFragment : Fragment() {
         setUpBottomNav()
     }
 
-    private fun setUpBottomNav(){
+    private fun setUpBottomNav() {
         switchFragment(UserDetailAlbumList.newInstance(viewModel))
         bottomNavigation_userdetail.setOnNavigationItemSelectedListener {
             when (it.itemId) {
@@ -50,9 +50,9 @@ class UserDetailFragment : Fragment() {
     }
 
     private fun switchFragment(fragment: Fragment) {
-        fragmentManager
-            ?.beginTransaction()
-            ?.replace(frameLayout_userdetail.id, fragment)
-            ?.commit()
+        childFragmentManager
+            .beginTransaction()
+            .replace(frameLayout_userdetail.id, fragment)
+            .commit()
     }
 }

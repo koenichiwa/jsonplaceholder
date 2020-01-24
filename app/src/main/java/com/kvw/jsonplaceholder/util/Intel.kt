@@ -9,19 +9,21 @@ import timber.log.Timber
 sealed class Intel<T>(val source: Source) {
     class Pending<T> : Intel<T>(Source.Local)
     class Success<T>(source: Source, val data: T) : Intel<T>(source)
-    class Error<T>(source: Source, val throwable: Throwable, val reason: String): Intel<T>(source)
-    enum class Source{
+    class Error<T>(source: Source, val throwable: Throwable, val reason: String) : Intel<T>(source)
+    enum class Source {
         Local,
         Remote
     }
 }
 
-fun <T> LiveData<Intel<T>>.observe(owner: LifecycleOwner,
-                                   onPending: () -> Unit = {},
-                                   onSuccess: (T)->Unit,
-                                   onError: (Throwable, String) -> Unit) {
-    this.observe(owner, Observer{
-        when(it){
+fun <T> LiveData<Intel<T>>.observe(
+    owner: LifecycleOwner,
+    onPending: () -> Unit = {},
+    onSuccess: (T) -> Unit,
+    onError: (Throwable, String) -> Unit
+) {
+    this.observe(owner, Observer {
+        when (it) {
             is Intel.Pending -> {
                 onPending()
                 Timber.d("Waiting for intel")
@@ -38,10 +40,12 @@ fun <T> LiveData<Intel<T>>.observe(owner: LifecycleOwner,
     })
 }
 
-fun <T> LiveData<Intel<T>>.observe(owner: LifecycleOwner,
-                                          pendingView: View?,
-                                          onSuccess: (T)->Unit,
-                                          onError: (Throwable, String) -> Unit){
+fun <T> LiveData<Intel<T>>.observe(
+    owner: LifecycleOwner,
+    pendingView: View?,
+    onSuccess: (T) -> Unit,
+    onError: (Throwable, String) -> Unit
+) {
     this.observe(owner,
         onPending = {
             pendingView?.visibility = View.VISIBLE

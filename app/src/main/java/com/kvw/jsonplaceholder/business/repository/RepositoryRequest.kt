@@ -1,6 +1,5 @@
 package com.kvw.jsonplaceholder.business.repository
 
-import android.util.Log
 import com.kvw.jsonplaceholder.util.Intel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,14 +17,14 @@ class RepositoryRequest<Param>(
     private val fetch: suspend () -> Param,
     private val read: suspend () -> Param,
     private val write: suspend (Param) -> Unit
-){
+) {
     fun fromRemote(): Flow<Intel<Param>> = flow {
         emit(Intel.Pending())
         try {
             Timber.d("Started fetch from remote")
             emit(Intel.Success(Intel.Source.Remote, fetch()))
             Timber.d("Fetched from remote")
-        } catch (t: Throwable){
+        } catch (t: Throwable) {
             emit(Intel.Error<Param>(Intel.Source.Remote, t, "Fetching from remote threw an exception"))
         }
     }.onEach { Timber.d("Emitting new Intel from ${it.source.name}") }
@@ -34,7 +33,7 @@ class RepositoryRequest<Param>(
     @FlowPreview
     fun fromLocalFirst(): Flow<Intel<Param>> = channelFlow<Intel<Param>> {
         send(Intel.Pending())
-        coroutineScope{
+        coroutineScope {
             val readJob = launch(Dispatchers.IO) {
                 try {
                     Timber.d("Started fetch from local")
@@ -42,7 +41,7 @@ class RepositoryRequest<Param>(
                     Timber.d("Fetched from local")
                 } catch (t: Throwable) {
                     send(Intel.Error(Intel.Source.Local, t, "Fetching from local threw an exception"))
-                    Timber.e(t,"Fetching from local threw an exception")
+                    Timber.e(t, "Fetching from local threw an exception")
                 }
             }
             launch(Dispatchers.IO) {
@@ -59,13 +58,13 @@ class RepositoryRequest<Param>(
                     }
                 } catch (t: Throwable) {
                     send(Intel.Error(Intel.Source.Local, t, "Fetching from remote threw an exception"))
-                    Timber.e(t,"Fetching from remote threw an exception")
+                    Timber.e(t, "Fetching from remote threw an exception")
                 }
             }
         }
     }.distinctUntilChanged { old, new ->
         return@distinctUntilChanged if (old is Intel.Success<Param> && new is Intel.Success<Param>)
-             old.data == new.data
+            old.data == new.data
         else
             false
     }.onEach { Timber.d("Emitting new Intel from ${it.source.name}") }

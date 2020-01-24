@@ -9,7 +9,7 @@ import com.kvw.jsonplaceholder.databinding.ItemAlbumAlbumlistBinding
 class UserDetailAlbumListAdapter(
     private val albums: List<Album>,
     private val onClick: (Album) -> Unit
-): RecyclerView.Adapter<UserDetailAlbumListAdapter.ViewHolder>(){
+) : RecyclerView.Adapter<UserDetailAlbumListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewBinding = LayoutInflater.from(parent.context)
@@ -21,12 +21,12 @@ class UserDetailAlbumListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(albums[position])
-        holder.itemViewBinding.root.setOnClickListener{ onClick(albums[position]) }
+        holder.itemViewBinding.root.setOnClickListener { onClick(albums[position]) }
     }
 
-    inner class ViewHolder(val itemViewBinding: ItemAlbumAlbumlistBinding)
-        : RecyclerView.ViewHolder(itemViewBinding.root){
-        fun bind(album: Album){
+    inner class ViewHolder(val itemViewBinding: ItemAlbumAlbumlistBinding) :
+        RecyclerView.ViewHolder(itemViewBinding.root) {
+        fun bind(album: Album) {
             // Bind ViewHolder here
             itemViewBinding.album = album
             itemViewBinding.executePendingBindings()

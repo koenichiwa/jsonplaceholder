@@ -1,19 +1,18 @@
 package com.kvw.jsonplaceholder.ui.userlist
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.kvw.jsonplaceholder.R
+import com.kvw.jsonplaceholder.util.observe
 import kotlinx.android.synthetic.main.fragment_userlist.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.kvw.jsonplaceholder.util.observe
-
 
 @ExperimentalCoroutinesApi
 class UserListFragment : Fragment() {
@@ -21,7 +20,8 @@ class UserListFragment : Fragment() {
     private val viewModel: UserListViewModel by viewModel()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_userlist, container, false)
