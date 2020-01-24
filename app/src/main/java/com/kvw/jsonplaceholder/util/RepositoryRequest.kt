@@ -1,4 +1,4 @@
-package com.kvw.jsonplaceholder.business.repository.util
+package com.kvw.jsonplaceholder.util
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -68,7 +68,7 @@ class RepositoryRequest<Param>(
                 } catch (t: Throwable) {
                     send(
                         Intel.Error(
-                            Intel.Source.Local, t, "Fetching from remote threw an exception"))
+                            Intel.Source.Remote, t, "Fetching from remote threw an exception"))
                     Timber.e(t, "Fetching from remote threw an exception")
                 }
             }

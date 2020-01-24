@@ -1,6 +1,6 @@
 package com.kvw.jsonplaceholder.business.repository
 
-import com.kvw.jsonplaceholder.business.repository.util.RepositoryRequest
+import com.kvw.jsonplaceholder.util.RepositoryRequest
 import com.kvw.jsonplaceholder.data.retrofit.UserService
 import com.kvw.jsonplaceholder.data.room.UserDao
 

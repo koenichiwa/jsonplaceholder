@@ -1,4 +1,4 @@
-package com.kvw.jsonplaceholder.business.repository.util
+package com.kvw.jsonplaceholder.util
 
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.flow.Flow
