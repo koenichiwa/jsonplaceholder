@@ -1,4 +1,4 @@
-package com.kvw.jsonplaceholder.util
+package com.kvw.jsonplaceholder.business.repository.util
 
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.flow.Flow
@@ -6,7 +6,9 @@ import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 
 sealed class Intel<T>(val source: Source) {
-    class Pending<T> : Intel<T>(Source.Local)
+    class Pending<T> : Intel<T>(
+        Source.Local
+    )
     class Success<T>(source: Source, val data: T) : Intel<T>(source)
     class Error<T>(source: Source, val throwable: Throwable, val reason: String) : Intel<T>(source)
     enum class Source {

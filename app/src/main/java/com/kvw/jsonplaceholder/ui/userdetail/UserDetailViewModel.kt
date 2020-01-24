@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.kvw.jsonplaceholder.business.model.Album
 import com.kvw.jsonplaceholder.business.model.User
 import com.kvw.jsonplaceholder.business.repository.AlbumRepository
-import com.kvw.jsonplaceholder.util.collect
+import com.kvw.jsonplaceholder.business.repository.util.collect
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

@@ -1,6 +1,5 @@
-package com.kvw.jsonplaceholder.business.repository
+package com.kvw.jsonplaceholder.business.repository.util
 
-import com.kvw.jsonplaceholder.util.Intel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -22,10 +21,14 @@ class RepositoryRequest<Param>(
         emit(Intel.Pending())
         try {
             Timber.d("Started fetch from remote")
-            emit(Intel.Success(Intel.Source.Remote, fetch()))
+            emit(
+                Intel.Success(
+                    Intel.Source.Remote, fetch()))
             Timber.d("Fetched from remote")
         } catch (t: Throwable) {
-            emit(Intel.Error<Param>(Intel.Source.Remote, t, "Fetching from remote threw an exception"))
+            emit(
+                Intel.Error<Param>(
+                    Intel.Source.Remote, t, "Fetching from remote threw an exception"))
         }
     }.onEach { Timber.d("Emitting new Intel from ${it.source.name}") }
 
@@ -37,10 +40,14 @@ class RepositoryRequest<Param>(
             val readJob = launch(Dispatchers.IO) {
                 try {
                     Timber.d("Started fetch from local")
-                    send(Intel.Success(Intel.Source.Local, read()))
+                    send(
+                        Intel.Success(
+                            Intel.Source.Local, read()))
                     Timber.d("Fetched from local")
                 } catch (t: Throwable) {
-                    send(Intel.Error(Intel.Source.Local, t, "Fetching from local threw an exception"))
+                    send(
+                        Intel.Error(
+                            Intel.Source.Local, t, "Fetching from local threw an exception"))
                     Timber.e(t, "Fetching from local threw an exception")
                 }
             }
@@ -53,11 +60,15 @@ class RepositoryRequest<Param>(
                             Timber.d("Cancelled fetch from local (remote was faster)")
                         }
                         launch(Dispatchers.IO) { write(it) }
-                        send(Intel.Success(Intel.Source.Remote, it))
+                        send(
+                            Intel.Success(
+                                Intel.Source.Remote, it))
                         Timber.d("Fetched from remote")
                     }
                 } catch (t: Throwable) {
-                    send(Intel.Error(Intel.Source.Local, t, "Fetching from remote threw an exception"))
+                    send(
+                        Intel.Error(
+                            Intel.Source.Local, t, "Fetching from remote threw an exception"))
                     Timber.e(t, "Fetching from remote threw an exception")
                 }
             }

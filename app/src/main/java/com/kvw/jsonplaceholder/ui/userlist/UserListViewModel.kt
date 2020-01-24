@@ -6,10 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kvw.jsonplaceholder.business.model.User
 import com.kvw.jsonplaceholder.business.repository.UserRepository
-import com.kvw.jsonplaceholder.util.collect
+import com.kvw.jsonplaceholder.business.repository.util.collect
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
