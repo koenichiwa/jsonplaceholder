@@ -1,6 +1,10 @@
-name: Android workflow
+name: Check Lint
 
-on: [push]
+on: 
+   push:
+     branches-ignore: 
+      - develop
+      - master
 
 jobs:
   build:
@@ -14,4 +18,4 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew lintKotlin
