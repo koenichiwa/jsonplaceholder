@@ -8,10 +8,8 @@ import com.kvw.jsonplaceholder.business.model.User
 import com.kvw.jsonplaceholder.business.repository.UserRepository
 import com.kvw.jsonplaceholder.business.repository.util.collect
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
-@ExperimentalCoroutinesApi
 class UserListViewModel(userRepository: UserRepository) : ViewModel() {
     private val _users = MutableLiveData<List<User>>()
     val users: LiveData<List<User>> get() = _users
@@ -27,7 +25,8 @@ class UserListViewModel(userRepository: UserRepository) : ViewModel() {
             userRepository.getAll().collect(
                 pendingLiveData = _loading,
                 succesLiveData = _users,
-                errorLiveData = _errorMessage
+                errorLiveData = _errorMessage,
+                userErrorMessage = "Could not load albums"
             )
         }
     }

@@ -55,3 +55,22 @@ suspend inline fun <T> Flow<Intel<out T>>.collect(
         }
     )
 }
+
+suspend inline fun <T> Flow<Intel<out T>>.collect(
+    pendingLiveData: MutableLiveData<Boolean>,
+    succesLiveData: MutableLiveData<T>,
+    errorLiveData: MutableLiveData<String>,
+    userErrorMessage: String
+) {
+    this.collect(
+        onPending = { pendingLiveData.postValue(true) },
+        onSuccess = {
+            pendingLiveData.postValue(false)
+            succesLiveData.postValue(it)
+        },
+        onError = { _, _ ->
+            pendingLiveData.postValue(false)
+            errorLiveData.postValue(userErrorMessage)
+        }
+    )
+}

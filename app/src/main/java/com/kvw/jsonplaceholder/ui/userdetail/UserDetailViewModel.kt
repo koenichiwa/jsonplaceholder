@@ -26,7 +26,8 @@ class UserDetailViewModel(user: User, albumRepository: AlbumRepository) : ViewMo
             albumRepository.getByUser(user).collect(
                 pendingLiveData = _loading,
                 succesLiveData = _albums,
-                errorLiveData = _errorMessage
+                errorLiveData = _errorMessage,
+                userErrorMessage = "Could not load users"
             )
         }
     }
