@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.kvw.jsonplaceholder.R
-import com.kvw.jsonplaceholder.util.observe
 import kotlinx.android.synthetic.main.fragment_userlist.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,17 +31,14 @@ class UserListFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        viewModel.users.observe(this,
-            pendingView = activity?.findViewById<ProgressBar>(R.id.progressBar_main),
-            onSuccess = { users ->
-                recyclerView_userList.swapAdapter(
-                    UserListAdapter(users) {
-                        findNavController().navigate(
-                            UserListFragmentDirections
-                                .actionUserListFragmentToUserDetailFragment(it)
-                        )
-                    }, true) },
-            onError = { _, reason -> Snackbar.make(frameLayout_userList_root, reason, Snackbar.LENGTH_LONG) }
+        viewModel.users.observe(this.viewLifecycleOwner, Observer { users ->
+            recyclerView_userList.swapAdapter(
+                UserListAdapter(users) {
+                    findNavController().navigate(
+                        UserListFragmentDirections
+                            .actionUserListFragmentToUserDetailFragment(it)
+                    )
+                }, true) }
         )
     }
 }
