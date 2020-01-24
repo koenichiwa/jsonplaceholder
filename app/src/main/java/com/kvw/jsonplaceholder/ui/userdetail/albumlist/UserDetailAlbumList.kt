@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.kvw.jsonplaceholder.R
 import com.kvw.jsonplaceholder.ui.userdetail.UserDetailViewModel
-import com.kvw.jsonplaceholder.util.observe
 import kotlinx.android.synthetic.main.fragment_userdetail_albumlist.*
 
 class UserDetailAlbumList(private val userListViewModel: UserDetailViewModel) : Fragment() {
@@ -32,19 +32,11 @@ class UserDetailAlbumList(private val userListViewModel: UserDetailViewModel) : 
         setUpRecyclerView()
     }
 
-    fun setUpRecyclerView() {
-//        Timber.d("${userListViewModel.albums.value}")
-//        userListViewModel.albums.value?.let {
-//            if (it is Intel.Success<List<Album>>)
-//                recyclerView_userDetail_albumList.adapter = UserDetailAlbumListAdapter(it.data) {}
-//        }
-        userListViewModel.albums.observe(this,
-            pendingView = activity?.findViewById(R.id.progressBar_main),
-            onSuccess = { albums ->
+    private fun setUpRecyclerView() {
+        userListViewModel.albums.observe(this.viewLifecycleOwner, Observer { albums ->
                 recyclerView_userDetail_albumList.swapAdapter(
                     UserDetailAlbumListAdapter(albums) {}, true)
-            },
-            onError = { _, _ -> }
+            }
         )
     }
 }

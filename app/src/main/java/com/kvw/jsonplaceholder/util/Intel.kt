@@ -1,9 +1,8 @@
 package com.kvw.jsonplaceholder.util
 
-import android.view.View
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
+import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 
 sealed class Intel<T>(val source: Source) {
@@ -16,44 +15,41 @@ sealed class Intel<T>(val source: Source) {
     }
 }
 
-fun <T> LiveData<Intel<T>>.observe(
-    owner: LifecycleOwner,
-    onPending: () -> Unit = {},
-    onSuccess: (T) -> Unit,
-    onError: (Throwable, String) -> Unit
+suspend inline fun <T> Flow<Intel<out T>>.collect(
+    crossinline onPending: () -> Unit = {},
+    crossinline onSuccess: (T) -> Unit,
+    crossinline onError: (Throwable, String) -> Unit
 ) {
-    this.observe(owner, Observer {
+    this.collect {
         when (it) {
             is Intel.Pending -> {
                 onPending()
-                Timber.d("Waiting for intel")
             }
             is Intel.Success -> {
-                Timber.d("Intel received")
                 onSuccess(it.data)
             }
             is Intel.Error -> {
-                Timber.d(it.throwable, "Intel collection of threw an error, reason: ${it.reason}")
+                Timber.e(it.throwable, it.reason)
                 onError(it.throwable, it.reason)
             }
         }
-    })
+    }
 }
 
-fun <T> LiveData<Intel<T>>.observe(
-    owner: LifecycleOwner,
-    pendingView: View?,
-    onSuccess: (T) -> Unit,
-    onError: (Throwable, String) -> Unit
+suspend inline fun <T> Flow<Intel<out T>>.collect(
+    pendingLiveData: MutableLiveData<Boolean>,
+    succesLiveData: MutableLiveData<T>,
+    errorLiveData: MutableLiveData<String>
 ) {
-    this.observe(owner,
-        onPending = {
-            pendingView?.visibility = View.VISIBLE
-        },
+    this.collect(
+        onPending = { pendingLiveData.postValue(true) },
         onSuccess = {
-            pendingView?.visibility = View.GONE
-            onSuccess(it)
+            pendingLiveData.postValue(false)
+            succesLiveData.postValue(it)
         },
-        onError = onError
+        onError = { _, reason ->
+            pendingLiveData.postValue(false)
+            errorLiveData.postValue(reason)
+        }
     )
 }
