@@ -8,11 +8,11 @@ import androidx.fragment.app.Fragment
 import com.kvw.jsonplaceholder.R
 import com.kvw.jsonplaceholder.ui.userdetail.UserDetailViewModel
 
-class UserDetailPostList(val userListViewModel: UserDetailViewModel) : Fragment() {
+class UserDetailPostListFragment(val userListViewModel: UserDetailViewModel) : Fragment() {
 
     companion object {
         fun newInstance(userListViewModel: UserDetailViewModel) =
-            UserDetailPostList(
+            UserDetailPostListFragment(
                 userListViewModel
             )
     }
