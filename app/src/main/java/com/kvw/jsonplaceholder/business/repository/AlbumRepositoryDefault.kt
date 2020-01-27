@@ -2,7 +2,7 @@ package com.kvw.jsonplaceholder.business.repository
 
 import com.kvw.jsonplaceholder.business.model.User
 import com.kvw.jsonplaceholder.data.retrofit.AlbumService
-import com.kvw.jsonplaceholder.data.room.AlbumDao
+import com.kvw.jsonplaceholder.data.room.dao.AlbumDao
 import com.kvw.jsonplaceholder.util.RepositoryRequest
 
 class AlbumRepositoryDefault(

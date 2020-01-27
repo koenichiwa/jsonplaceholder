@@ -1,4 +1,4 @@
-package com.kvw.jsonplaceholder.data.room
+package com.kvw.jsonplaceholder.data.room.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
