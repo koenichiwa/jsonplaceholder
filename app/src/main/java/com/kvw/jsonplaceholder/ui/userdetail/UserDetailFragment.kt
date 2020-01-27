@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.kvw.jsonplaceholder.MainActivity
 import com.kvw.jsonplaceholder.R
 import com.kvw.jsonplaceholder.ui.userdetail.albumlist.UserDetailAlbumList
 import com.kvw.jsonplaceholder.ui.userdetail.postlist.UserDetailPostListFragment
@@ -29,6 +30,9 @@ class UserDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        (activity as MainActivity).binding.viewModel = viewModel
+
         setUpBottomNav()
     }
 

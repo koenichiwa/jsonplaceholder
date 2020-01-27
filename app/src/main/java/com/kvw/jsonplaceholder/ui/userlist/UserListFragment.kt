@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.kvw.jsonplaceholder.MainActivity
 import com.kvw.jsonplaceholder.R
 import kotlinx.android.synthetic.main.fragment_userlist.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,6 +28,9 @@ class UserListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        (activity as MainActivity).binding.viewModel = viewModel
+
         setupRecyclerView()
     }
 

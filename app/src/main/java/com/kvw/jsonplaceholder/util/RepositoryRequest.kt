@@ -36,14 +36,17 @@ class RepositoryRequest<Param>(
     @FlowPreview
     fun fromLocalFirst(): Flow<Intel<Param>> = channelFlow<Intel<Param>> {
         send(Intel.Pending())
+        Timber.d("Loading...")
         coroutineScope {
             val readJob = launch(Dispatchers.IO) {
                 try {
                     Timber.d("Started fetch from local")
-                    send(
-                        Intel.Success(
-                            Intel.Source.Local, read()))
-                    Timber.d("Fetched from local")
+                    read()?.let {
+                        if (it !is Collection<*> || it.isNotEmpty()) {
+                            send(Intel.Success(Intel.Source.Local, it))
+                            Timber.d("Fetched from local")
+                        }
+                    }
                 } catch (t: Throwable) {
                     send(
                         Intel.Error(
