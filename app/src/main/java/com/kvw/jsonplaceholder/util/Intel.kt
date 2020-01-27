@@ -20,7 +20,7 @@ sealed class Intel<T>(val source: Source) {
 suspend inline fun <T> Flow<Intel<out T>>.collect(
     crossinline onPending: () -> Unit = {},
     crossinline onSuccess: (T) -> Unit,
-    crossinline onError: (Throwable, String) -> Unit
+    crossinline onError: (Intel.Error<out T>) -> Unit
 ) {
     this.collect {
         when (it) {
@@ -32,7 +32,7 @@ suspend inline fun <T> Flow<Intel<out T>>.collect(
             }
             is Intel.Error -> {
                 Timber.e(it.throwable, it.reason)
-                onError(it.throwable, it.reason)
+                onError(it)
             }
         }
     }
@@ -49,9 +49,9 @@ suspend inline fun <T> Flow<Intel<out T>>.collect(
             pendingLiveData.postValue(false)
             succesLiveData.postValue(it)
         },
-        onError = { _, reason ->
+        onError = {
             pendingLiveData.postValue(false)
-            errorLiveData.postValue(reason)
+            errorLiveData.postValue(it.reason)
         }
     )
 }
@@ -68,7 +68,7 @@ suspend inline fun <T> Flow<Intel<out T>>.collect(
             pendingLiveData.postValue(false)
             succesLiveData.postValue(it)
         },
-        onError = { _, _ ->
+        onError = {
             pendingLiveData.postValue(false)
             errorLiveData.postValue(userErrorMessage)
         }

@@ -27,5 +27,17 @@
         <argument
             android:name="user"
             app:argType="com.kvw.jsonplaceholder.business.model.User" />
+        <action
+            android:id="@+id/action_userDetailFragment_to_albumDetailFragment"
+            app:destination="@id/albumDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/albumDetailFragment"
+        android:name="com.kvw.jsonplaceholder.ui.albumdetail.AlbumDetailFragment"
+        android:label="fragment_albumdetail"
+        tools:layout="@layout/fragment_albumdetail" >
+        <argument
+            android:name="album"
+            app:argType="com.kvw.jsonplaceholder.business.model.Album" />
     </fragment>
 </navigation>
